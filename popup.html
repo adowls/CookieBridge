@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: sans-serif;
+            width: 340px;
+            padding: 10px;
+            margin: 0;
+        }
+
+        .panel {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        h3 {
+            margin: 0 0 10px;
+            text-align: center;
+        }
+
+        label {
+            display: flex;
+            flex-direction: column;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-top: 2px;
+        }
+
+        .checkbox-label {
+            flex-direction: row;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            flex: 1;
+            margin: 0 2px;
+        }
+
+        button:hover {
+            background-color: #e2e6ea;
+        }
+
+        button.primary {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        button.primary:hover {
+            background-color: #0056b3;
+        }
+
+        #cookie-list {
+            max-height: 170px;
+            overflow-y: auto;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            margin-top: 2px;
+            font-size: 11px;
+            background: #fff;
+        }
+
+        .cookie-header,
+        .cookie-item {
+            display: grid;
+            grid-template-columns: 18px minmax(0, 1.1fr) minmax(0, 0.9fr);
+            align-items: center;
+            gap: 6px;
+            padding: 5px 6px;
+        }
+
+        .cookie-header {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f8fafc;
+        }
+
+        .cookie-item + .cookie-item {
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .cookie-item:hover {
+            background: #f8fafc;
+        }
+
+        .cookie-name,
+        .cookie-path {
+            display: block;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .cookie-path {
+            color: #64748b;
+        }
+
+        .cookie-sort {
+            flex: none;
+            width: 100%;
+            min-width: 0;
+            margin: 0;
+            padding: 2px 0;
+            border: 0;
+            background: transparent;
+            color: #334155;
+            font-size: 11px;
+            font-weight: 600;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .cookie-sort:hover {
+            background: transparent;
+            color: #0f172a;
+        }
+
+        .sort-arrow {
+            color: #2563eb;
+            font-size: 10px;
+        }
+
+        .cookie-empty {
+            padding: 8px 6px;
+            color: #64748b;
+        }
+
+        #status {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 12px;
+            min-height: 15px;
+        }
+
+        .status-success {
+            color: green;
+        }
+
+        .status-error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="panel">
+        <h3>Sync My Cookies</h3>
+
+        <label>GitHub Token
+            <input type="password" id="githubToken" placeholder="ghp_...">
+        </label>
+
+        <label>Gist ID
+            <input type="text" id="gistId" placeholder="Gist ID">
+        </label>
+
+        <label>Filename
+            <input type="text" id="filename" value="cookies.json">
+        </label>
+
+        <label>Target Domain
+            <input type="text" id="targetDomain" list="domainList" placeholder="e.g. 115.com" value="115.com">
+            <datalist id="domainList"></datalist>
+        </label>
+
+        <label>Encryption Password
+            <input type="password" id="password" placeholder="Optional">
+        </label>
+
+        <label>Cookies to Sync (Current domain)</label>
+        <div id="cookie-list">
+            Loading cookies...
+        </div>
+
+        <label class="checkbox-label">
+            <input type="checkbox" id="autoPull"> Auto-pull on load
+        </label>
+
+        <label class="checkbox-label">
+            <input type="checkbox" id="clearBeforePull"> Clear cookies before pull
+        </label>
+
+        <label class="checkbox-label">
+            <input type="checkbox" id="reloadAfterPull"> Reload after pull
+        </label>
+
+        <label id="reloadPathContainer" style="display:none;">Reload Path
+            <input type="text" id="reloadAfterPullUrl" placeholder="empty = current page">
+        </label>
+
+        <label class="checkbox-label">
+            <input type="checkbox" id="autoPush"> Auto-push on DOM trigger
+        </label>
+
+        <label id="domTriggerContainer" style="display:none;">DOM Selector
+            <input type="text" id="domTriggerSelector" placeholder="#topInfo or //*[@id='topInfo']">
+        </label>
+
+        <div class="button-group">
+            <button id="saveBtn" class="primary">Save</button>
+            <button id="testBtn">Test</button>
+        </div>
+
+        <div class="button-group">
+            <button id="pullBtn">Pull</button>
+            <button id="pushBtn">Push</button>
+        </div>
+
+        <div class="button-group">
+            <button id="exportBtn">Export Config</button>
+            <button id="importBtn">Import Config</button>
+        </div>
+        <input type="file" id="importFile" accept=".json" style="display: none;">
+
+        <div id="status"></div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+
+</html>
