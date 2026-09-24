@@ -40,7 +40,7 @@ const getSiteSettings = (allSettings, url) => {
 };
 
 const notify = async (message, type = 'basic', preferredTabId = null) => {
-    console.log(`[SMC Notification]: ${message}`);
+    console.log(`[CookieBridge]: ${message}`);
 
     let tabId = preferredTabId;
     if (!tabId) {

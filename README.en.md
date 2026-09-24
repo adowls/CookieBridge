@@ -1,10 +1,10 @@
-# Sync My Cookies
+# CookieBridge - Private Cookie Sync
 
 **English** | [中文](README.md)
 
 Back up cookies for a given domain to a GitHub Gist, and pull them back into the browser when needed.
 
-- Version: 1.11 (Manifest V3)
+- Version: 1.12 (Manifest V3)
 - Works on: Chrome / Edge and other Chromium-based browsers
 
 ---

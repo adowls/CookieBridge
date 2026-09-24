@@ -78,7 +78,7 @@ const loadSettings = async () => {
     updateDomainList();
 
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    let initialDomain = '115.com';
+    let initialDomain = 'www.google.com';
 
     if (tab && tab.url && tab.url.startsWith('http')) {
         try {

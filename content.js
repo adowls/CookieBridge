@@ -28,22 +28,22 @@
 
     if (!currentSiteConfig) return;
 
-    if (sessionStorage.getItem('smc_just_reloaded') === 'true') {
-        sessionStorage.removeItem('smc_just_reloaded');
-        console.log('[SMC] Reloaded after pull. Ready.');
+    if (sessionStorage.getItem('cookiebridge_just_reloaded') === 'true') {
+        sessionStorage.removeItem('cookiebridge_just_reloaded');
+        console.log('[CookieBridge] Reloaded after pull. Ready.');
     } else if (currentSiteConfig.autoPull) {
-        console.log('[SMC] Auto-pulling cookies...');
+        console.log('[CookieBridge] Auto-pulling cookies...');
 
         if (currentSiteConfig.reloadAfterPull) {
-            sessionStorage.setItem('smc_just_reloaded', 'true');
+            sessionStorage.setItem('cookiebridge_just_reloaded', 'true');
         }
 
         chrome.runtime.sendMessage({ action: 'PULL_COOKIES' }, (response) => {
             if (!response || !response.success) {
-                console.error('[SMC] Auto-pull failed:', response ? response.error : 'Unknown');
-                sessionStorage.removeItem('smc_just_reloaded');
+                console.error('[CookieBridge] Auto-pull failed:', response ? response.error : 'Unknown');
+                sessionStorage.removeItem('cookiebridge_just_reloaded');
             } else {
-                console.log('[SMC] Auto-pull success.');
+                console.log('[CookieBridge] Auto-pull success.');
             }
         });
     }
@@ -76,20 +76,20 @@
             }
             return !!document.querySelector(value);
         } catch (error) {
-            console.warn('[SMC] Invalid DOM Trigger selector:', value, error);
+            console.warn('[CookieBridge] Invalid DOM Trigger selector:', value, error);
             return false;
         }
     };
 
     if (currentSiteConfig.autoPush && currentSiteConfig.domTriggerSelector) {
         const selector = currentSiteConfig.domTriggerSelector;
-        console.log(`[SMC] Watching for trigger: ${selector}`);
+        console.log(`[CookieBridge] Watching for trigger: ${selector}`);
 
         let hasPushed = false;
         const handleFound = (observer) => {
             if (hasPushed) return;
             hasPushed = true;
-            console.log('[SMC] Trigger found! Push initiated.');
+            console.log('[CookieBridge] Trigger found! Push initiated.');
             chrome.runtime.sendMessage({ action: 'AUTO_PUSH_TRIGGER' });
             if (observer) observer.disconnect();
         };
@@ -120,7 +120,7 @@
             background-color: ${type === 'error' ? '#dc3545' : '#28a745'};
             transition: opacity 0.5s; opacity: 0;
         `;
-        div.textContent = `[SMC] ${message}`;
+        div.textContent = `[CookieBridge] ${message}`;
         document.body.appendChild(div);
 
         requestAnimationFrame(() => div.style.opacity = '1');

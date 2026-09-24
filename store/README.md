@@ -1,4 +1,4 @@
-# Chrome Web Store listing kit — Sync My Cookies
+# Chrome Web Store listing kit — CookieBridge - Private Cookie Sync
 
 Copy-and-paste source for <https://chrome.google.com/webstore/devconsole>.
 Field limits are the ones enforced by the Developer Console.
@@ -8,7 +8,7 @@ Field limits are the ones enforced by the Developer Console.
 ### Item name (max 45)
 
 ```text
-Sync My Cookies
+CookieBridge - Private Cookie Sync
 ```
 
 ### Short description (max 132)
@@ -22,7 +22,7 @@ Back up any site's cookies to your own private GitHub Gist and restore them in o
 The Developer Console does not render Markdown. Paste this block as-is.
 
 ```text
-Sync My Cookies backs up the cookies of any website to a private GitHub Gist and restores them whenever you need them.
+CookieBridge - Private Cookie Sync backs up the cookies of any website to a private GitHub Gist and restores them whenever you need them.
 
 Built for people who work across several browsers, profiles or machines, or who need to keep a site session alive after clearing cookies.
 
@@ -62,7 +62,7 @@ Cookies are equivalent to login credentials. Keep your Gist secret and set an en
 ### Single purpose description
 
 ```text
-Sync My Cookies has one purpose: to back up and restore the cookies of websites the user explicitly configures, storing them in a GitHub Gist that the user owns.
+CookieBridge - Private Cookie Sync has one purpose: to back up and restore the cookies of websites the user explicitly configures, storing them in a GitHub Gist that the user owns.
 ```
 
 ### Permission justifications

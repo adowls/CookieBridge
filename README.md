@@ -1,10 +1,10 @@
-# Sync My Cookies
+# CookieBridge - Private Cookie Sync
 
 [English](README.en.md) | **中文**
 
 把指定域名下的 Cookie 备份到 GitHub Gist，需要时再拉回浏览器。
 
-- 版本：1.11（Manifest V3）
+- 版本：1.12（Manifest V3）
 - 适用：Chrome / Edge 等 Chromium 内核浏览器
 
 ---
